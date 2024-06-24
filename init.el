@@ -8,10 +8,13 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
+;; Increase the amout of data reads from the process
 (setq read-process-output-max (* 4 1024 1024))
 
+;; Disable start-up screen
 (setq inhibit-startup-screen t)
 
+;; Display (row, col) in mode-line
 (setq-default line-number-mode t
 	      column-number-mode t)
 
@@ -19,10 +22,12 @@
 ;; (defalias 'yes-or-no-p 'y-or-n-p)
 (setq use-short-answers t)
 
+;; Don't creeate  .#  backup~  #autosave#  files
 (setq-default create-lockfiles nil
  	      make-backup-files nil
  	      auto-save-default nil)
 
+;; For evaluating expressions only run on MacOS
 (defconst is-mac-p (eq system-type 'darwin))
 
 (when (and is-mac-p (not (display-graphic-p)))
@@ -46,7 +51,12 @@
 (when (member "Menlo" (font-family-list))
   (set-frame-font "Menlo-11" t t))
 
+;; By default, emacs will warn you if you try to edit a buffer for
+;; a file whose contents have changed on disk.  You could go one
+;; step further and have emacs update the buffer automatically
+;; (if there were no unsaved changes)
 (setq global-auto-revert-mode t)
+
 
 ;; (when (fboundp 'display-line-numbers-mode)
 ;;   (setq-default display-line-numbers-width 3)
@@ -67,9 +77,9 @@
 (global-set-key (kbd "S-<return>") 'is-newline-at-end-of-line)
 
 (defun is-suspend-frame ()
-  "Stop C-z from minimizing frames under MacOS;
+  "Stop `C-z' from minimizing frames under MacOS;
 but when Emacs running in terminal rather than graphic interface,
-it can be suspended using C-z and recover through command `fg'."
+it can be suspended using `C-z' and recover through command `fg'."
   (interactive)
   (unless (and is-mac-p (display-graphic-p))
     (suspend-frame)))
